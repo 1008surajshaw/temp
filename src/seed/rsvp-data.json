@@ -1,0 +1,62 @@
+[
+  {
+    "id": "rsvp_1_usr_001",
+    "eventId": 1,
+    "userId": "usr_001",
+    "userName": "Alice Johnson",
+    "userEmail": "alice.johnson@example.com",
+    "userAvatar": "https://example.com/avatars/alice.png",
+    "status": "pending",
+    "registeredAt": "2025-01-10T10:30:00Z"
+  },
+  {
+    "id": "rsvp_1_usr_002",
+    "eventId": 1,
+    "userId": "usr_002",
+    "userName": "Brian Smith",
+    "userEmail": "brian.smith@example.com",
+    "userAvatar": "https://example.com/avatars/brian.png",
+    "status": "approved",
+    "registeredAt": "2025-01-09T14:20:00Z"
+  },
+  {
+    "id": "rsvp_3_usr_003",
+    "eventId": 3,
+    "userId": "usr_003",
+    "userName": "Carla Diaz",
+    "userEmail": "carla.diaz@example.com",
+    "userAvatar": "https://example.com/avatars/carla.png",
+    "status": "pending",
+    "registeredAt": "2025-01-08T09:15:00Z"
+  },
+  {
+    "id": "rsvp_3_usr_004",
+    "eventId": 3,
+    "userId": "usr_004",
+    "userName": "David Lee",
+    "userEmail": "david.lee@example.com",
+    "userAvatar": "https://example.com/avatars/david.png",
+    "status": "rejected",
+    "registeredAt": "2025-01-07T16:45:00Z"
+  },
+  {
+    "id": "rsvp_5_usr_005",
+    "eventId": 5,
+    "userId": "usr_005",
+    "userName": "Emily Zhang",
+    "userEmail": "emily.zhang@example.com",
+    "userAvatar": "https://example.com/avatars/emily.png",
+    "status": "pending",
+    "registeredAt": "2025-01-06T11:30:00Z"
+  },
+  {
+    "id": "rsvp_5_usr_006",
+    "eventId": 5,
+    "userId": "usr_006",
+    "userName": "Frank Harris",
+    "userEmail": "frank.harris@example.com",
+    "userAvatar": "https://example.com/avatars/frank.png",
+    "status": "approved",
+    "registeredAt": "2025-01-05T13:20:00Z"
+  }
+]
