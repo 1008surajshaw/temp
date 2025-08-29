@@ -1,0 +1,105 @@
+[
+    {
+      "id": "usr_001",
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com",
+      "avatar": "https://example.com/avatars/alice.png"
+    },
+    {
+      "id": "usr_002",
+      "name": "Brian Smith",
+      "email": "brian.smith@example.com",
+      "avatar": "https://example.com/avatars/brian.png"
+    },
+    {
+      "id": "usr_003",
+      "name": "Carla Diaz",
+      "email": "carla.diaz@example.com",
+      "avatar": "https://example.com/avatars/carla.png"
+    },
+    {
+      "id": "usr_004",
+      "name": "David Lee",
+      "email": "david.lee@example.com",
+      "avatar": "https://example.com/avatars/david.png"
+    },
+    {
+      "id": "usr_005",
+      "name": "Emily Zhang",
+      "email": "emily.zhang@example.com",
+      "avatar": "https://example.com/avatars/emily.png"
+    },
+    {
+      "id": "usr_006",
+      "name": "Frank Harris",
+      "email": "frank.harris@example.com",
+      "avatar": "https://example.com/avatars/frank.png"
+    },
+    {
+      "id": "usr_007",
+      "name": "Grace Kim",
+      "email": "grace.kim@example.com",
+      "avatar": "https://example.com/avatars/grace.png"
+    },
+    {
+      "id": "usr_008",
+      "name": "Henry Moore",
+      "email": "henry.moore@example.com",
+      "avatar": "https://example.com/avatars/henry.png"
+    },
+    {
+      "id": "usr_009",
+      "name": "Isabella Rossi",
+      "email": "isabella.rossi@example.com",
+      "avatar": "https://example.com/avatars/isabella.png"
+    },
+    {
+      "id": "usr_010",
+      "name": "Jack Patel",
+      "email": "jack.patel@example.com",
+      "avatar": "https://example.com/avatars/jack.png"
+    },
+    {
+      "id": "usr_011",
+      "name": "Katherine Young",
+      "email": "katherine.young@example.com",
+      "avatar": "https://example.com/avatars/katherine.png"
+    },
+    {
+      "id": "usr_012",
+      "name": "Liam Walker",
+      "email": "liam.walker@example.com",
+      "avatar": "https://example.com/avatars/liam.png"
+    },
+    {
+      "id": "usr_013",
+      "name": "Maria Gonzales",
+      "email": "maria.gonzales@example.com",
+      "avatar": "https://example.com/avatars/maria.png"
+    },
+    {
+      "id": "usr_014",
+      "name": "Nathan Brooks",
+      "email": "nathan.brooks@example.com",
+      "avatar": "https://example.com/avatars/nathan.png"
+    },
+    {
+      "id": "usr_015",
+      "name": "Olivia White",
+      "email": "olivia.white@example.com",
+      "avatar": "https://example.com/avatars/olivia.png"
+    },
+    {
+      "id": "usr_016",
+      "name": "Creater White",
+      "email": "olivia.white@example.com",
+      "avatar": "https://example.com/avatars/olivia.png"
+    } ,
+    {
+      "id": "usr_017",
+      "name": "Host White",
+      "email": "olivia.white@example.com",
+      "avatar": "https://example.com/avatars/olivia.png"
+    }
+  ]
+  

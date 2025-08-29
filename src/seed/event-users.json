@@ -1,0 +1,31 @@
+[
+    {
+      "eventId": "evt_001",
+      "userIds": ["usr_001", "usr_002", "usr_003", "usr_004"]
+    },
+    {
+      "eventId": "evt_002",
+      "userIds": ["usr_002", "usr_005", "usr_006"]
+    },
+    {
+      "eventId": "evt_003",
+      "userIds": ["usr_007", "usr_001"]
+    },
+    {
+      "eventId": "evt_004",
+      "userIds": ["usr_008", "usr_009", "usr_010"]
+    },
+    {
+      "eventId": "evt_005",
+      "userIds": ["usr_003", "usr_006", "usr_011", "usr_012"]
+    },
+    {
+      "eventId": "evt_006",
+      "userIds": ["usr_013"]
+    },
+    {
+      "eventId": "evt_007",
+      "userIds": ["usr_004", "usr_008", "usr_014", "usr_015"]
+    }
+  ]
+  

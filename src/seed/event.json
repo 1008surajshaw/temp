@@ -1,0 +1,432 @@
+[
+    {
+      "id":1,
+      "title": "Tech Future Conference 2025",
+      "description": "A global conference exploring cutting-edge trends in AI, blockchain, and Web 3.0. Includes keynote speakers, workshops, and networking sessions.",
+      "slug": "tech-future-conference-2025",
+      "avatar": "https://example.com/images/techconf-avatar.png",
+      "category": "Technology",
+      "images": [
+        "https://example.com/images/techconf-main.png",
+        "https://example.com/images/techconf-hall.png"
+      ],
+      "tags": ["AI", "Blockchain", "Networking"],
+      "status": "published",
+      "billing_info": {
+        "street": "123 Innovation Blvd",
+        "city": "San Francisco",
+        "state": "CA",
+        "postal_code": "94103",
+        "country": "USA"
+      },
+      "creator": "usr_016",
+      "host": "usr_017",
+      "property": "",
+      "schedule": {
+        "mode": "multi_day",
+        "start_time": "2025-10-12T09:00:00Z",
+        "end_time": "2025-10-14T18:00:00Z",
+        "registration_start_time": "2025-08-01T00:00:00Z",
+        "registration_end_time": "2025-10-10T23:59:59Z",
+        "timezone": "America/Los_Angeles",
+        "recurrence": {
+          "pattern": "weekly",
+          "interval": 1,
+          "endDate": "2025-12-31T23:59:59Z",
+          "current_occurences": 1,
+          "max_occurences": 12
+        }
+      },
+      "visibility": "public",
+      "ticketing": {
+        "enabled": true,
+        "capacity": 500
+      },
+      "hosting": {
+        "format": "hybrid",
+        "address": {
+          "street": "747 Howard St",
+          "city": "San Francisco",
+          "state": "CA",
+          "postal_code": "94103",
+          "country": "USA",
+          "vanue": "Moscone Center",
+          "maps_link": "https://maps.google.com/examplelink1",
+          "nearby_landmark": "Yerba Buena Gardens",
+          "instruction": "Check in at Gate B with your QR code.",
+          "coordinates": {
+            "lat": 37.7847,
+            "lng": -122.4011
+          }
+        },
+        "virtual_links": {
+          "Zoom": "https://zoom.us/j/123456789",
+          "YouTube": "https://youtube.com/techfuture2025"
+        }
+      },
+      "access_control": {
+        "require_rsvp": true,
+        "view_details": "before_registration"
+      },
+      "cancellation_policy": {
+        "allowed": true,
+        "refund_strategy": "tiered_refund",
+        "tiered_refunds": [
+          {
+            "before_date": "2025-09-15T00:00:00Z",
+            "percentage": 80
+          },
+          {
+            "before_date": "2025-10-01T00:00:00Z",
+            "percentage": 50
+          }
+        ]
+      },
+      "terms_and_conditions": [
+        "All attendees must present valid ID.",
+        "Recording of sessions is prohibited.",
+        "Masks are required indoors."
+      ],
+      "sponsors": [
+        { "name": "OpenAI", "image": "https://example.com/sponsor/openai.png" },
+        { "name": "Google Cloud" }
+      ],
+      "createdat": "2025-08-28T12:00:00Z"
+    },
+    {
+      "id":2,
+      "title": "Yoga for Beginners - Daily Virtual Sessions",
+      "description": "A 30-minute guided yoga class streamed every morning for 3 months. Perfect for those starting out.",
+      "slug": "yoga-for-beginners-2025",
+      "avatar": "https://example.com/images/yoga-avatar.png",
+      "category": "Health & Wellness",
+      "images": ["https://example.com/images/yoga-session.png"],
+      "tags": ["Yoga", "Wellness", "Fitness"],
+      "status": "published",
+      "creator": "usr_016",
+      "host": "usr_017",
+      "property": "Virtual Classroom",
+      "schedule": {
+        "mode": "recurring",
+        "start_time": "2025-09-01T06:30:00Z",
+        "end_time": "2025-09-01T07:00:00Z",
+        "registration_start_time": "2025-08-15T00:00:00Z",
+        "registration_end_time": "2025-09-15T23:59:59Z",
+        "timezone": "Asia/Kolkata",
+        "recurrence": {
+          "pattern": "daily",
+          "interval": 1,
+          "endDate": "2025-12-01T07:00:00Z",
+          "current_occurences": 15,
+          "max_occurences": 90
+        }
+      },
+      "visibility": "private",
+      "ticketing": {
+        "enabled": true,
+        "capacity": 100
+      },
+      "hosting": {
+        "format": "virtual",
+        "address": {
+          "street": "",
+          "city": "",
+          "state": "",
+          "postal_code": "",
+          "country": "Online",
+          "vanue": "Zoom Platform",
+          "maps_link": "",
+          "instruction": "Link will be shared upon registration"
+        },
+        "virtual_links": {
+          "Zoom": "https://zoom.us/j/987654321"
+        }
+      },
+      "access_control": {
+        "require_rsvp": false,
+        "view_details": "custom",
+        "hideUntil": "2025-08-31T00:00:00Z"
+      },
+      "cancellation_policy": {
+        "allowed": false,
+        "refund_strategy": "no_refund",
+        "tiered_refunds": []
+      },
+      "terms_and_conditions": [
+        "This class is non-refundable.",
+        "Ensure you have a yoga mat and stable internet connection.",
+        "The instructor is not responsible for personal injuries."
+      ],
+      "sponsors": [
+        { "name": "Organic Living Co.", "image": "https://example.com/sponsor/organic.png" }
+      ],
+      "createdat": "2025-08-28T12:00:00Z"
+
+    },
+    {
+      "id":3,
+      "title": "Startup Pitch Night",
+      "description": "An evening event where 10 startups pitch to top VCs. Includes networking dinner.",
+      "slug": "startup-pitch-night",
+      "avatar": "https://example.com/images/pitch-night.png",
+      "category": "Entrepreneurship",
+      "images": ["https://example.com/images/pitch-stage.png"],
+      "tags": ["Startups", "VC", "Networking"],
+      "status": "draft",
+      "creator": "usr_016",
+      "host": "usr_017",
+      "property": "Co-Working Space - Downtown",
+      "schedule": {
+        "mode": "single",
+        "start_time": "2025-11-20T18:00:00Z",
+        "end_time": "2025-11-20T21:00:00Z",
+        "registration_start_time": "2025-10-01T00:00:00Z",
+        "registration_end_time": "2025-11-18T23:59:59Z",
+        "timezone": "America/New_York",
+        "recurrence": {
+          "pattern": "monthly",
+          "interval": 1,
+          "current_occurences": 0,
+          "max_occurences": 1
+        }
+      },
+      "visibility": "public",
+      "ticketing": {
+        "enabled": true,
+        "capacity": 200
+      },
+      "hosting": {
+        "format": "physical",
+        "address": {
+          "street": "55 Broadway",
+          "city": "New York",
+          "state": "NY",
+          "postal_code": "10006",
+          "country": "USA",
+          "vanue": "Startup Hub NYC",
+          "maps_link": "https://maps.google.com/examplelink2",
+          "instruction": "Present your confirmation email at the entrance.",
+          "coordinates": { "lat": 40.707, "lng": -74.011 }
+        },
+        "virtual_links": {}
+      },
+      "access_control": {
+        "require_rsvp": true,
+        "view_details": "after_registration"
+      },
+      "cancellation_policy": {
+        "allowed": true,
+        "refund_strategy": "partial_refund",
+        "refund_percentage": 40,
+        "tiered_refunds": []
+      },
+      "terms_and_conditions": [
+        "Business casual dress code required.",
+        "No outside food allowed."
+      ],
+      "sponsors": [],
+      "createdat": "2025-08-27T12:00:00Z"
+
+
+    },
+    {
+      "id":4,
+      "title": "Photography Workshop - Tiered Access",
+      "description": "Full-day workshop with hands-on training. Early bird, regular, and VIP tickets.",
+      "slug": "photography-workshop-2025",
+      "avatar": "https://example.com/images/photo-workshop.png",
+      "category": "Art & Design",
+      "images": ["https://example.com/images/photo-session.png"],
+      "tags": ["Photography", "Workshop", "Learning"],
+      "status": "published",
+      "creator": "usr_016",
+      "host": "usr_017",
+      "property": "Studio Hall",
+      "schedule": {
+        "mode": "single",
+        "start_time": "2025-10-25T10:00:00Z",
+        "end_time": "2025-10-25T17:00:00Z",
+        "registration_start_time": "2025-09-01T00:00:00Z",
+        "registration_end_time": "2025-10-24T23:59:59Z",
+        "timezone": "Europe/London",
+        "recurrence": {
+          "pattern": "monthly",
+          "interval": 0,
+          "current_occurences": 0,
+          "max_occurences": 1
+        }
+      },
+      "visibility": "public",
+      "ticketing": {
+        "enabled": true,
+        "capacity": 75
+      },
+      "hosting": {
+        "format": "physical",
+        "address": {
+          "street": "12 Camden St",
+          "city": "London",
+          "state": "LDN",
+          "postal_code": "NW1 9AB",
+          "country": "UK",
+          "vanue": "Creative Lens Studio",
+          "maps_link": "https://maps.google.com/examplelink3",
+          "instruction": "Bring your camera and laptop."
+        },
+        "virtual_links": {}
+      },
+      "access_control": {
+        "require_rsvp": false,
+        "view_details": "before_registration"
+      },
+      "cancellation_policy": {
+        "allowed": true,
+        "refund_strategy": "full_refund",
+        "tiered_refunds": []
+      },
+      "terms_and_conditions": [
+        "Seats are first come, first serve within each tier.",
+        "No refunds after event day."
+      ],
+      "sponsors": [
+        { "name": "Canon" },
+        { "name": "Adobe", "image": "https://example.com/sponsor/adobe.png" }
+      ],
+      "createdat": "2025-08-28T12:00:00Z"
+
+    },
+    {     
+     "id":5,
+      "title": "Cloud Computing Bootcamp",
+      "description": "Two-week bootcamp to learn AWS, Azure, and Google Cloud fundamentals.",
+      "slug": "cloud-bootcamp-2025",
+      "avatar": "https://example.com/images/cloud-bootcamp.png",
+      "category": "Technology",
+      "images": ["https://example.com/images/cloud-lab.png"],
+      "tags": ["AWS", "Azure", "GCP", "Cloud"],
+      "status": "cancelled",
+      "creator": "usr_016",
+      "host": "usr_017",
+      "property": "Virtual Classroom",
+      "schedule": {
+        "mode": "multi_day",
+        "start_time": "2025-09-05T09:00:00Z",
+        "end_time": "2025-09-19T16:00:00Z",
+        "registration_start_time": "2025-08-01T00:00:00Z",
+        "registration_end_time": "2025-09-04T23:59:59Z",
+        "timezone": "Asia/Singapore",
+        "recurrence": {
+          "pattern": "daily",
+          "interval": 1,
+          "endDate": "2025-09-19T16:00:00Z",
+          "current_occurences": 0,
+          "max_occurences": 14
+        }
+      },
+      "visibility": "private",
+      "ticketing": {
+        "enabled": false,
+        "capacity": 0
+      },
+      "hosting": {
+        "format": "virtual",
+        "address": {
+          "street": "",
+          "city": "",
+          "state": "",
+          "postal_code": "",
+          "country": "Online",
+          "vanue": "Zoom Classroom",
+          "maps_link": ""
+        },
+        "virtual_links": {
+          "Zoom": "https://zoom.us/j/111222333"
+        }
+      },
+      "access_control": {
+        "require_rsvp": true,
+        "view_details": "custom",
+        "hideUntil": "2025-09-01T00:00:00Z"
+      },
+      "cancellation_policy": {
+        "allowed": true,
+        "refund_strategy": "full_refund",
+        "tiered_refunds": []
+      },
+      "terms_and_conditions": [
+        "Access link is only for registered participants.",
+        "Bootcamp recordings will be available for 1 month."
+      ],
+      "createdat": "2025-08-26T12:00:00Z"
+
+    },
+    {
+     "id":6,
+      "title": "Music Festival Live",
+      "description": "Outdoor music festival with multiple stages, food stalls, and live performances.",
+      "slug": "music-festival-live-2025",
+      "avatar": "https://example.com/images/music-festival.png",
+      "category": "Entertainment",
+      "images": [
+        "https://example.com/images/stage.png",
+        "https://example.com/images/crowd.png"
+      ],
+      "tags": ["Music", "Festival", "Live"],
+      "status": "completed",
+      "creator": "usr_016",
+      "host": "usr_017",
+      "property": "Open Park Grounds",
+      "schedule": {
+        "mode": "single",
+        "start_time": "2025-07-10T12:00:00Z",
+        "end_time": "2025-07-10T23:00:00Z",
+        "registration_start_time": "2025-06-01T00:00:00Z",
+        "registration_end_time": "2025-07-09T23:59:59Z",
+        "timezone": "Europe/Berlin",
+        "recurrence": {
+          "pattern": "monthly",
+          "interval": 0,
+          "current_occurences": 1,
+          "max_occurences": 1
+        }
+      },
+      "visibility": "public",
+      "ticketing": {
+        "enabled": true,
+        "capacity": 2000
+      },
+      "hosting": {
+        "format": "physical",
+        "address": {
+          "street": "Main Park Lane",
+          "city": "Berlin",
+          "state": "BE",
+          "postal_code": "10115",
+          "country": "Germany",
+          "vanue": "Berlin Central Park",
+          "maps_link": "https://maps.google.com/examplelink5"
+        },
+        "virtual_links": {}
+      },
+      "access_control": {
+        "require_rsvp": false,
+        "view_details": "after_registration"
+      },
+      "cancellation_policy": {
+        "allowed": false,
+        "refund_strategy": "no_refund",
+        "tiered_refunds": []
+      },
+      "terms_and_conditions": [
+        "No re-entry after leaving the venue.",
+        "Festival wristband must be worn at all times."
+      ],
+      "sponsors": [
+        { "name": "Spotify" },
+        { "name": "Red Bull" }
+      ],
+      "createdat": "2025-08-24T12:00:00Z"
+
+    }
+  ]
+  
