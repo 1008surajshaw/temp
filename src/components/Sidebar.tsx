@@ -41,14 +41,9 @@ export default function Sidebar() {
       label: 'Plans',
     },
     {
-      key: '/analytics',
+      key: '/subscriptions',
       icon: <BarChartOutlined />,
-      label: 'Analytics',
-    },
-    {
-      key: '/settings',
-      icon: <SettingOutlined />,
-      label: 'Settings',
+      label: 'Subscriptions',
     },
   ];
 
@@ -59,19 +54,24 @@ export default function Sidebar() {
       label: 'Dashboard',
     },
     {
-      key: '/my-plans',
+      key: '/active-plan',
       icon: <CreditCardOutlined />,
-      label: 'My Plans',
+      label: 'Active Plan',
+    },
+    {
+      key: '/available-plans',
+      icon: <CreditCardOutlined />,
+      label: 'Purchase Plans',
+    },
+    {
+      key: '/all-features',
+      icon: <AppstoreOutlined />,
+      label: 'All Features',
     },
     {
       key: '/usage',
       icon: <BarChartOutlined />,
       label: 'Usage',
-    },
-    {
-      key: '/settings',
-      icon: <SettingOutlined />,
-      label: 'Settings',
     },
   ];
 
@@ -79,12 +79,15 @@ export default function Sidebar() {
 
   return (
     <Sider width={250} theme="light" className="border-r">
-      <div className="p-4 border-b">
-        <Text strong>Feature Management</Text>
+      <div className="p-4 border-b bg-blue-50">
+        <Text strong className="text-blue-900">Feature Management</Text>
         <div className="mt-2">
-          <Text type="secondary" className="text-sm">
-            {user?.name} ({user?.user_type})
+          <Text type="secondary" className="text-sm text-blue-700">
+            {user?.name}
           </Text>
+          <div className="text-xs text-blue-600 mt-1">
+            {user?.user_type === 'admin' ? '👑 Admin' : '👤 User'}
+          </div>
         </div>
       </div>
 
