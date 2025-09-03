@@ -1,9 +1,8 @@
 import { Card, Typography, Button, Table, Space, Modal, Form, Input, message, Skeleton, Tag } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined, AppstoreOutlined, PlayCircleOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, AppstoreOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useFeatures, useCreateFeature, useUpdateFeature, useToggleFeature } from '../hooks/useFeatures';
-import { useCreateUsage } from '../hooks/useUsage';
 import { CreateFeatureDto, UpdateFeatureDto, FeatureResponseDto } from '../types/frontend-types';
 
 const { Title } = Typography;
@@ -18,25 +17,8 @@ export default function Features() {
   const createFeatureMutation = useCreateFeature();
   const updateFeatureMutation = useUpdateFeature();
   const toggleFeatureMutation = useToggleFeature();
-  const createUsageMutation = useCreateUsage();
 
   const features = featuresData?.data || [];
-
-  const handleUseFeature = async (featureId: string, featureName: string) => {
-    if (!user) return;
-    
-    try {
-      await createUsageMutation.mutateAsync({
-        user_id: user.id,
-        feature_id: featureId,
-        usage_count: 1,
-        usage_date: new Date().toISOString(),
-      });
-      message.success(`Used ${featureName} successfully!`);
-    } catch (error) {
-      message.error('Failed to record usage');
-    }
-  };
 
   const handleCreate = () => {
     setEditingFeature(null);
@@ -139,59 +121,7 @@ export default function Features() {
     },
   ];
 
-  if (user?.user_type !== 'admin') {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <Title level={2} className="text-gray-900 flex items-center gap-2">
-            <AppstoreOutlined className="text-blue-600" />
-            Available Features
-          </Title>
-        </div>
-        
-        {isLoading ? (
-          <Card>
-            <Skeleton active paragraph={{ rows: 4 }} />
-          </Card>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {features.map((feature) => (
-              <Card
-                key={feature.id}
-                className="border-gray-200 hover:border-blue-300 transition-colors"
-                bodyStyle={{ padding: '16px' }}
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium text-gray-900">{feature.name}</h3>
-                    <Tag color={feature.is_active ? 'green' : 'red'} size="small">
-                      {feature.is_active ? 'Active' : 'Inactive'}
-                    </Tag>
-                  </div>
-                  <p className="text-sm text-gray-600">{feature.description || 'No description'}</p>
-                  <div className="text-xs text-gray-500 bg-gray-50 px-2 py-1 rounded">
-                    Key: {feature.feature_key}
-                  </div>
-                  {feature.is_active && (
-                    <Button
-                      type="primary"
-                      size="small"
-                      icon={<PlayCircleOutlined />}
-                      onClick={() => handleUseFeature(feature.id, feature.name)}
-                      loading={createUsageMutation.isPending}
-                      className="w-full bg-green-600 hover:bg-green-700 border-green-600 mt-2"
-                    >
-                      Use Feature
-                    </Button>
-                  )}
-                </div>
-              </Card>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  }
+
 
   return (
     <div className="space-y-6">

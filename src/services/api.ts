@@ -64,6 +64,13 @@ class ApiService {
     });
   }
 
+  async verifyEmail(token: string): Promise<ApiResponse<any>> {
+    return this.request('/auth/verify-email', {
+      method: 'POST',
+      body: JSON.stringify({ token }),
+    });
+  }
+
   // Organization endpoints
   async createOrganization(data: CreateOrganizationDto): Promise<ApiResponse<OrganizationResponseDto>> {
     return this.request('/organizations', {
@@ -132,44 +139,7 @@ class ApiService {
     });
   }
 
-  // Subscription endpoints
-  async getUserSubscriptions(userId: string): Promise<ApiResponse<SubscriptionResponseDto[]>> {
-    return this.request(`/subscriptions/user/${userId}`);
-  }
 
-  async getActiveSubscriptions(userId: string): Promise<ApiResponse<SubscriptionResponseDto[]>> {
-    return this.request(`/subscriptions/user/${userId}/active`);
-  }
-
-  // Subscription endpoints
-  async createSubscription(data: any): Promise<ApiResponse<any>> {
-    return this.request('/subscriptions', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  }
-
-  async cancelSubscription(id: string): Promise<ApiResponse<any>> {
-    return this.request(`/subscriptions/${id}/cancel`, {
-      method: 'PATCH',
-    });
-  }
-
-  // Usage endpoints
-  async getUserUsage(userId: string): Promise<ApiResponse<UsageResponseDto[]>> {
-    return this.request(`/usage/user/${userId}`);
-  }
-
-  async createUsage(data: any): Promise<ApiResponse<any>> {
-    return this.request('/usage', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  }
-
-  async getTotalUsage(userId: string, featureId: string): Promise<ApiResponse<{ total: number }>> {
-    return this.request(`/usage/user/${userId}/feature/${featureId}/total`);
-  }
 }
 
 export const apiService = new ApiService();

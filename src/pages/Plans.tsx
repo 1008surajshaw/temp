@@ -132,57 +132,7 @@ export default function Plans() {
     },
   ];
 
-  if (user?.user_type !== 'admin') {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <Title level={2} className="text-gray-900 flex items-center gap-2">
-            <CreditCardOutlined className="text-blue-600" />
-            Available Plans
-          </Title>
-        </div>
-        
-        {isLoading ? (
-          <Card>
-            <Skeleton active paragraph={{ rows: 4 }} />
-          </Card>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {plans.map((plan) => (
-              <Card
-                key={plan.id}
-                className="border-gray-200 hover:border-blue-300 transition-colors"
-                bodyStyle={{ padding: '20px' }}
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium text-gray-900">{plan.name}</h3>
-                    <Tag color={plan.is_active ? 'green' : 'red'} size="small">
-                      {plan.is_active ? 'Active' : 'Inactive'}
-                    </Tag>
-                  </div>
-                  <p className="text-sm text-gray-600">{plan.description}</p>
-                  <div className="flex items-center gap-1">
-                    <DollarOutlined className="text-green-600" />
-                    <span className="text-xl font-bold text-green-600">${plan.price}</span>
-                    <span className="text-sm text-gray-500">/{plan.billing_cycle}</span>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium text-gray-700">Features:</div>
-                    {plan.features.map((feature, index) => (
-                      <div key={index} className="text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded">
-                        {feature.feature_name}: {feature.is_unlimited ? 'Unlimited' : feature.feature_limit}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  }
+
 
   return (
     <div className="space-y-6">

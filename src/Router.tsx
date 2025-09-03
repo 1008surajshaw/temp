@@ -7,10 +7,6 @@ import Dashboard from './pages/Dashboard'
 import Users from './pages/Users'
 import Features from './pages/Features'
 import Plans from './pages/Plans'
-import ActivePlan from './pages/ActivePlan'
-import AvailablePlans from './pages/AvailablePlans'
-import AllFeatures from './pages/AllFeatures'
-import Usage from './pages/Usage'
 import DashboardLayout from './components/DashboardLayout'
 import ProtectedRoute from './components/ProtectedRoute'
 
@@ -30,10 +26,6 @@ export default function Router() {
                 <Route path="/users" element={<Users />} />
                 <Route path="/features" element={<Features />} />
                 <Route path="/plans" element={<Plans />} />
-                <Route path="/active-plan" element={<ActivePlan />} />
-                <Route path="/available-plans" element={<AvailablePlans />} />
-                <Route path="/all-features" element={<AllFeatures />} />
-                <Route path="/usage" element={<Usage />} />
             </Route>
             
             <Route path="*" element={<NotMatch />} />

@@ -19,7 +19,7 @@ export default function Sidebar() {
   const location = useLocation();
   const { user, logout } = useAuth();
 
-  const adminMenuItems = [
+  const menuItems = [
     {
       key: '/dashboard',
       icon: <DashboardOutlined />,
@@ -47,36 +47,6 @@ export default function Sidebar() {
     },
   ];
 
-  const userMenuItems = [
-    {
-      key: '/dashboard',
-      icon: <DashboardOutlined />,
-      label: 'Dashboard',
-    },
-    {
-      key: '/active-plan',
-      icon: <CreditCardOutlined />,
-      label: 'Active Plan',
-    },
-    {
-      key: '/available-plans',
-      icon: <CreditCardOutlined />,
-      label: 'Purchase Plans',
-    },
-    {
-      key: '/all-features',
-      icon: <AppstoreOutlined />,
-      label: 'All Features',
-    },
-    {
-      key: '/usage',
-      icon: <BarChartOutlined />,
-      label: 'Usage',
-    },
-  ];
-
-  const menuItems = user?.user_type === 'admin' ? adminMenuItems : userMenuItems;
-
   return (
     <Sider width={250} theme="light" className="border-r">
       <div className="p-4 border-b bg-blue-50">
@@ -86,7 +56,7 @@ export default function Sidebar() {
             {user?.name}
           </Text>
           <div className="text-xs text-blue-600 mt-1">
-            {user?.user_type === 'admin' ? '👑 Admin' : '👤 User'}
+            👑 Admin Panel
           </div>
         </div>
       </div>

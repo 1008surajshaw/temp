@@ -12,6 +12,12 @@ export default function Login() {
     try {
       const response = await loginMutation.mutateAsync(values);
       if (response.success) {
+        if (response.data?.user.user_type !== 'admin') {
+          message.error('Access denied. Only admin users can login.');
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          return;
+        }
         message.success('Login successful!');
         navigate('/dashboard');
       }
