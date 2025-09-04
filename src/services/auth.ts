@@ -15,6 +15,11 @@ export const authService = {
     return response.data!;
   },
 
+  async getProfile(): Promise<Owner> {
+    const response = await apiClient.get<Owner>('/owners/profile');
+    return response.data!;
+  },
+
   logout() {
     localStorage.removeItem('authToken');
     window.location.href = '/login';

@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import Sidebar from './Sidebar';
 import OrganizationSelector from './OrganizationSelector';
 import { useOrganization } from '../hooks/useOrganization';
+import { useAuth } from '../hooks/useAuth';
 
 interface LayoutProps {
   children: ReactNode;
@@ -9,6 +10,10 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const { currentOrg } = useOrganization();
+  const { owner } = useAuth();
+
+  // Don't show organization selector if user hasn't created organization yet
+  const showOrgSelector = owner?.organizationCreated;
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -19,7 +24,7 @@ export default function Layout({ children }: LayoutProps) {
             <h1 className="text-xl font-semibold text-gray-800">
               {currentOrg ? `${currentOrg.name} Dashboard` : 'Owner Dashboard'}
             </h1>
-            <OrganizationSelector />
+            {showOrgSelector && <OrganizationSelector />}
           </div>
         </header>
         <main className="p-6">

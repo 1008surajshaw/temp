@@ -12,7 +12,10 @@ const menuItems = [
 
 export default function Sidebar() {
   const location = useLocation();
-  const { logout } = useAuth();
+  const { logout, owner } = useAuth();
+
+  // Disable navigation if organization not created
+  const isDisabled = !owner?.organizationCreated;
 
   return (
     <div className="bg-gray-800 text-white w-64 min-h-screen p-4 flex flex-col">
@@ -24,12 +27,15 @@ export default function Sidebar() {
         {menuItems.map((item) => (
           <Link
             key={item.path}
-            to={item.path}
+            to={isDisabled ? '#' : item.path}
             className={`flex items-center space-x-3 px-4 py-2 rounded-lg transition-colors ${
-              location.pathname === item.path
+              isDisabled
+                ? 'text-gray-500 cursor-not-allowed'
+                : location.pathname === item.path
                 ? 'bg-indigo-600 text-white'
                 : 'text-gray-300 hover:bg-gray-700 hover:text-white'
             }`}
+            onClick={(e) => isDisabled && e.preventDefault()}
           >
             <span className="text-lg">{item.icon}</span>
             <span>{item.name}</span>

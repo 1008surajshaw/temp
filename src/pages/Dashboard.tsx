@@ -6,7 +6,9 @@ import UsersPage from './UsersPage';
 import PlansPage from './PlansPage';
 import SubscriptionsPage from './SubscriptionsPage';
 import AnalyticsPage from './AnalyticsPage';
+import CreateOrganizationModal from '../components/CreateOrganizationModal';
 import { useOrganization } from '../hooks/useOrganization';
+import { useAuth } from '../hooks/useAuth';
 const DashboardHome = () => {
   const { currentOrg } = useOrganization();
   
@@ -40,6 +42,29 @@ const DashboardHome = () => {
 };
 
 export default function Dashboard() {
+  const { owner, loadProfile } = useAuth();
+  const { refreshOrganizations } = useOrganization();
+
+  const handleOrganizationCreated = async () => {
+    await loadProfile();
+    refreshOrganizations();
+  };
+
+  // Show sticky modal if user hasn't created organization
+  if (owner && !owner.organizationCreated) {
+    return (
+      <>
+        <Layout>
+          <div className="text-center py-12">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Welcome!</h1>
+            <p className="text-gray-600">Please create your organization to continue.</p>
+          </div>
+        </Layout>
+        <CreateOrganizationModal onSuccess={handleOrganizationCreated} />
+      </>
+    );
+  }
+
   return (
     <Layout>
       <Routes>

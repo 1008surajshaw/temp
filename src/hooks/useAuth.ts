@@ -1,15 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { authService } from '../services/auth';
-import { LoginRequest, RegisterRequest } from '../types/api';
+import { LoginRequest, RegisterRequest, Owner } from '../types/api';
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(authService.isAuthenticated());
+  const [owner, setOwner] = useState<Owner | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadProfile();
+    }
+  }, [isAuthenticated]);
+
+  const loadProfile = async () => {
+    try {
+      const profile = await authService.getProfile();
+      setOwner(profile);
+    } catch (error) {
+      console.error('Failed to load profile:', error);
+    }
+  };
 
   const login = async (credentials: LoginRequest) => {
     setLoading(true);
     try {
-      await authService.login(credentials);
+      const response = await authService.login(credentials);
+      setOwner(response.owner);
       setIsAuthenticated(true);
       window.location.href = '/dashboard';
     } finally {
@@ -36,6 +53,8 @@ export const useAuth = () => {
     register,
     logout,
     isAuthenticated,
-    loading
+    owner,
+    loading,
+    loadProfile
   };
 };

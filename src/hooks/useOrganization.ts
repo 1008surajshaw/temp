@@ -22,10 +22,15 @@ export const useOrganization = () => {
     }
   };
 
+  const refreshOrganizations = () => {
+    loadOrganizations();
+  };
+
   return {
     currentOrg,
     setCurrentOrg,
     organizations,
-    loadOrganizations
+    loadOrganizations,
+    refreshOrganizations
   };
 };

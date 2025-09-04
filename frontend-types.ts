@@ -37,6 +37,7 @@ export interface Owner {
   email: string;
   accountType: string;
   organizationId?: string;
+  organizationCreated: boolean;
   isActive: boolean;
   createdAt: string;
 }
