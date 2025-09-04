@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { featureService } from '../services/feature';
 import { organizationService } from '../services/organization';
+import { useOrganization } from '../hooks/useOrganization';
 import { Feature, Organization, CreateFeatureRequest, FeatureUser, CreateFeatureUserRequest } from '../types/api';
 import Modal from '../components/Modal';
 
 export default function FeaturesPage() {
+  const { currentOrg } = useOrganization();
   const [features, setFeatures] = useState<Feature[]>([]);
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [selectedFeature, setSelectedFeature] = useState<Feature | null>(null);
@@ -28,17 +30,22 @@ export default function FeaturesPage() {
   });
 
   useEffect(() => {
-    loadData();
-  }, []);
+    if (currentOrg) {
+      loadData();
+    }
+  }, [currentOrg]);
 
   const loadData = async () => {
+    if (!currentOrg) return;
+    
     try {
       const [featuresData, orgsData] = await Promise.all([
-        featureService.getAll(),
+        featureService.getByOrganization(currentOrg.id),
         organizationService.getAll()
       ]);
       setFeatures(featuresData);
       setOrganizations(orgsData);
+      setNewFeature(prev => ({ ...prev, organizationId: currentOrg.id }));
     } catch (error) {
       console.error('Failed to load data:', error);
     } finally {
@@ -110,6 +117,10 @@ export default function FeaturesPage() {
       }
     }
   };
+
+  if (!currentOrg) {
+    return <div className="text-center py-8">Please select an organization first.</div>;
+  }
 
   if (loading) {
     return <div className="flex justify-center items-center h-64">Loading...</div>;

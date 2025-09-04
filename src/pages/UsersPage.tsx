@@ -1,26 +1,43 @@
 import { useState, useEffect } from 'react';
 import { featureService } from '../services/feature';
+import { useOrganization } from '../hooks/useOrganization';
 import { FeatureUser } from '../types/api';
 
 export default function UsersPage() {
+  const { currentOrg } = useOrganization();
   const [users, setUsers] = useState<FeatureUser[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadUsers();
-  }, []);
+    if (currentOrg) {
+      loadUsers();
+    }
+  }, [currentOrg]);
 
   const loadUsers = async () => {
+    if (!currentOrg) return;
+    
     try {
-      // This would need to be implemented in the backend to get all users
-      // For now, we'll show an empty state
-      setUsers([]);
+      // Get all features for the organization and their users
+      const features = await featureService.getByOrganization(currentOrg.id);
+      const allUsers: FeatureUser[] = [];
+      
+      for (const feature of features) {
+        const featureUsers = await featureService.getFeatureUsers(feature.id);
+        allUsers.push(...featureUsers);
+      }
+      
+      setUsers(allUsers);
     } catch (error) {
       console.error('Failed to load users:', error);
     } finally {
       setLoading(false);
     }
   };
+
+  if (!currentOrg) {
+    return <div className="text-center py-8">Please select an organization first.</div>;
+  }
 
   if (loading) {
     return <div className="flex justify-center items-center h-64">Loading...</div>;
