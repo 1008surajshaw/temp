@@ -1,34 +1,27 @@
-import { Routes, Route } from 'react-router-dom'
-import NotMatch from './pages/NotMatch'
-import Landing from './pages/Landing'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import Dashboard from './pages/Dashboard'
-import Users from './pages/Users'
-import Features from './pages/Features'
-import Plans from './pages/Plans'
-import DashboardLayout from './components/DashboardLayout'
-import ProtectedRoute from './components/ProtectedRoute'
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './hooks/useAuth';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import Dashboard from './pages/Dashboard';
 
 export default function Router() {
-    return (
-        <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            
-            <Route element={
-                <ProtectedRoute>
-                    <DashboardLayout />
-                </ProtectedRoute>
-            }>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/users" element={<Users />} />
-                <Route path="/features" element={<Features />} />
-                <Route path="/plans" element={<Plans />} />
-            </Route>
-            
-            <Route path="*" element={<NotMatch />} />
-        </Routes>
-    )
+  const { isAuthenticated } = useAuth();
+
+  return (
+    <Routes>
+      <Route 
+        path="/login" 
+        element={!isAuthenticated ? <LoginPage /> : <Navigate to="/dashboard" />} 
+      />
+      <Route 
+        path="/signup" 
+        element={!isAuthenticated ? <SignupPage /> : <Navigate to="/dashboard" />} 
+      />
+      <Route 
+        path="/dashboard/*" 
+        element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} 
+      />
+      <Route path="/" element={<Navigate to="/dashboard" />} />
+    </Routes>
+  );
 }
