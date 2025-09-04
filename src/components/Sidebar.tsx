@@ -15,12 +15,12 @@ export default function Sidebar() {
   const { logout } = useAuth();
 
   return (
-    <div className="bg-gray-800 text-white w-64 min-h-screen p-4">
+    <div className="bg-gray-800 text-white w-64 min-h-screen p-4 flex flex-col">
       <div className="mb-8">
         <h1 className="text-xl font-bold">Owner Dashboard</h1>
       </div>
       
-      <nav className="space-y-2">
+      <nav className="space-y-2 flex-1">
         {menuItems.map((item) => (
           <Link
             key={item.path}
@@ -37,7 +37,7 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      <div className="absolute bottom-4 left-4 right-4">
+      <div className="mt-auto">
         <button
           onClick={logout}
           className="w-full flex items-center space-x-3 px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-colors"

@@ -1,15 +1,15 @@
 import { Routes, Route } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
+import FeaturesPage from './FeaturesPage';
+import OrganizationsPage from './OrganizationsPage';
+import UsersPage from './UsersPage';
 
 // Dashboard page components
-const UsersPage = () => <div className="p-6"><h1 className="text-2xl font-bold">Users Management</h1></div>;
-const FeaturesPage = () => <div className="p-6"><h1 className="text-2xl font-bold">Features Management</h1></div>;
-const PlansPage = () => <div className="p-6"><h1 className="text-2xl font-bold">Plans Management</h1></div>;
-const SubscriptionsPage = () => <div className="p-6"><h1 className="text-2xl font-bold">Subscriptions Management</h1></div>;
-const AnalyticsPage = () => <div className="p-6"><h1 className="text-2xl font-bold">Analytics Dashboard</h1></div>;
-const OrganizationsPage = () => <div className="p-6"><h1 className="text-2xl font-bold">Organizations Management</h1></div>;
+const PlansPage = () => <div><h1 className="text-2xl font-bold">Plans Management</h1></div>;
+const SubscriptionsPage = () => <div><h1 className="text-2xl font-bold">Subscriptions Management</h1></div>;
+const AnalyticsPage = () => <div><h1 className="text-2xl font-bold">Analytics Dashboard</h1></div>;
 const DashboardHome = () => (
-  <div className="p-6">
+  <div>
     <h1 className="text-2xl font-bold mb-4">Welcome to Owner Dashboard</h1>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div className="bg-white p-6 rounded-lg shadow">
@@ -30,19 +30,16 @@ const DashboardHome = () => (
 
 export default function Dashboard() {
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <Sidebar />
-      <div className="flex-1">
-        <Routes>
-          <Route path="/" element={<DashboardHome />} />
-          <Route path="/users" element={<UsersPage />} />
-          <Route path="/features" element={<FeaturesPage />} />
-          <Route path="/plans" element={<PlansPage />} />
-          <Route path="/subscriptions" element={<SubscriptionsPage />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route path="/organizations" element={<OrganizationsPage />} />
-        </Routes>
-      </div>
-    </div>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<DashboardHome />} />
+        <Route path="/users" element={<UsersPage />} />
+        <Route path="/features" element={<FeaturesPage />} />
+        <Route path="/plans" element={<PlansPage />} />
+        <Route path="/subscriptions" element={<SubscriptionsPage />} />
+        <Route path="/analytics" element={<AnalyticsPage />} />
+        <Route path="/organizations" element={<OrganizationsPage />} />
+      </Routes>
+    </Layout>
   );
 }

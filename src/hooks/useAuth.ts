@@ -11,6 +11,7 @@ export const useAuth = () => {
     try {
       await authService.login(credentials);
       setIsAuthenticated(true);
+      window.location.href = '/dashboard';
     } finally {
       setLoading(false);
     }
