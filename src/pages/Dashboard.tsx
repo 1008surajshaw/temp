@@ -47,7 +47,9 @@ export default function Dashboard() {
 
   const handleOrganizationCreated = async () => {
     await loadProfile();
-    refreshOrganizations();
+    await refreshOrganizations();
+    // Force a re-render by updating the key or state
+    window.location.reload();
   };
 
   // Show sticky modal if user hasn't created organization

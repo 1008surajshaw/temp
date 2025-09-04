@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { planService } from '../services/plan';
 import { featureService } from '../services/feature';
 import { useOrganization } from '../hooks/useOrganization';
-import { Plan, CreatePlanRequest, Feature } from '../types/api';
+import { Plan, CreatePlanRequest, Feature, FeatureLimit } from '../types/api';
 import Modal from '../components/Modal';
 
 export default function PlansPage() {
@@ -42,6 +42,35 @@ export default function PlansPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const addFeatureLimit = () => {
+    if (features.length === 0) return;
+    const newFeatureLimit: FeatureLimit = {
+      featureId: features[0].id,
+      limit: 100,
+      isUnlimited: false
+    };
+    setNewPlan(prev => ({
+      ...prev,
+      features: [...prev.features, newFeatureLimit]
+    }));
+  };
+
+  const removeFeatureLimit = (index: number) => {
+    setNewPlan(prev => ({
+      ...prev,
+      features: prev.features.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateFeatureLimit = (index: number, field: keyof FeatureLimit, value: any) => {
+    setNewPlan(prev => ({
+      ...prev,
+      features: prev.features.map((feature, i) => 
+        i === index ? { ...feature, [field]: value } : feature
+      )
+    }));
   };
 
   const handleCreatePlan = async (e: React.FormEvent) => {
@@ -131,6 +160,72 @@ export default function PlansPage() {
               value={newPlan.price}
               onChange={(e) => setNewPlan({...newPlan, price: parseFloat(e.target.value)})}
             />
+          </div>
+          
+          <div>
+            <div className="flex justify-between items-center mb-2">
+              <label className="block text-sm font-medium">Features & Limits</label>
+              <button
+                type="button"
+                onClick={addFeatureLimit}
+                className="text-blue-600 hover:text-blue-800 text-sm"
+                disabled={features.length === 0}
+              >
+                + Add Feature
+              </button>
+            </div>
+            
+            {newPlan.features.map((featureLimit, index) => (
+              <div key={index} className="border rounded-md p-3 mb-2 bg-gray-50">
+                <div className="flex justify-between items-start mb-2">
+                  <select
+                    className="flex-1 px-2 py-1 border border-gray-300 rounded text-sm mr-2"
+                    value={featureLimit.featureId}
+                    onChange={(e) => updateFeatureLimit(index, 'featureId', e.target.value)}
+                  >
+                    {features.map((feature) => (
+                      <option key={feature.id} value={feature.id}>{feature.name}</option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    onClick={() => removeFeatureLimit(index)}
+                    className="text-red-600 hover:text-red-800 text-sm"
+                  >
+                    Remove
+                  </button>
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={featureLimit.isUnlimited}
+                      onChange={(e) => updateFeatureLimit(index, 'isUnlimited', e.target.checked)}
+                      className="mr-1"
+                    />
+                    <span className="text-sm">Unlimited</span>
+                  </label>
+                  
+                  {!featureLimit.isUnlimited && (
+                    <div className="flex items-center space-x-1">
+                      <span className="text-sm">Limit:</span>
+                      <input
+                        type="number"
+                        min="1"
+                        className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
+                        value={featureLimit.limit}
+                        onChange={(e) => updateFeatureLimit(index, 'limit', parseInt(e.target.value))}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+            
+            {newPlan.features.length === 0 && (
+              <p className="text-gray-500 text-sm">No features added yet. Click "Add Feature" to include features in this plan.</p>
+            )}
           </div>
           <div className="flex justify-end space-x-2">
             <button

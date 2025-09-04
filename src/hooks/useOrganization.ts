@@ -22,8 +22,8 @@ export const useOrganization = () => {
     }
   };
 
-  const refreshOrganizations = () => {
-    loadOrganizations();
+  const refreshOrganizations = async () => {
+    await loadOrganizations();
   };
 
   return {
