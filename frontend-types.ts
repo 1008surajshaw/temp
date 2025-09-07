@@ -145,8 +145,8 @@ export interface FeatureUser {
   organizationId: string;
   accessToken: string;
   isActive: boolean;
-  usageCount: number;
-  lastUsed: string;
+  usageCount?: number;
+  lastUsed?: string;
   createdAt: string;
 }
 
@@ -239,11 +239,93 @@ export interface Analytics {
 }
 
 export interface DashboardStats {
-  totalRequests: number;
-  successfulRequests: number;
-  failedRequests: number;
-  limitExceededCount: number;
-  avgResponseTime: number;
+  overview: {
+    totalUsers: number;
+    totalFeatures: number;
+    totalPlans: number;
+    activeUserPlans: number;
+    totalRevenue: number;
+    monthlyActiveUsers: number;
+  };
+  userStats: {
+    newUsersThisMonth: number;
+    userGrowthRate: number;
+    activeUsersToday: number;
+    topActiveUsers: Array<{
+      userId: string;
+      userName: string;
+      email: string;
+      totalUsage: number;
+      lastActive: string;
+    }>;
+  };
+  featureStats: {
+    mostPopularFeatures: Array<{
+      featureId: string;
+      featureName: string;
+      userCount: number;
+      totalUsage: number;
+      avgUsagePerUser: number;
+    }>;
+    featureUsageTrend: Array<{
+      featureId: string;
+      featureName: string;
+      dailyUsage: Array<{
+        date: string;
+        usage: number;
+      }>;
+    }>;
+  };
+  planStats: {
+    mostPopularPlans: Array<{
+      planId: string;
+      planName: string;
+      price: number;
+      subscriberCount: number;
+      revenue: number;
+      conversionRate: number;
+    }>;
+    planDistribution: Array<{
+      planName: string;
+      count: number;
+      percentage: number;
+    }>;
+    revenueByPlan: Array<{
+      planName: string;
+      revenue: number;
+      percentage: number;
+    }>;
+  };
+  usageStats: {
+    totalApiCalls: number;
+    successRate: number;
+    avgResponseTime: number;
+    peakUsageHours: Array<{
+      hour: number;
+      usage: number;
+    }>;
+    monthlyUsageTrend: Array<{
+      month: string;
+      totalUsage: number;
+      uniqueUsers: number;
+    }>;
+  };
+  performanceStats: {
+    limitExceededCount: number;
+    errorRate: number;
+    topErrorFeatures: Array<{
+      featureId: string;
+      featureName: string;
+      errorCount: number;
+      errorRate: number;
+    }>;
+  };
+}
+
+export interface DashboardResponse {
+  data: DashboardStats;
+  organizationName: string;
+  generatedAt: string;
 }
 
 // ============================================

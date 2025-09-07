@@ -3,7 +3,7 @@ import { Organization, CreateOrganizationRequest, UpdateOrganizationRequest } fr
 
 export const organizationService = {
   async getAll(): Promise<Organization[]> {
-    const response = await apiClient.get<Organization[]>('/organizations');
+    const response = await apiClient.get<Organization[]>('/organizations/my');
     return response.data || [];
   },
 

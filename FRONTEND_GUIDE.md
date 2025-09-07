@@ -150,11 +150,13 @@ import { apiClient } from './api';
 import { Feature, CreateFeatureRequest, UpdateFeatureRequest } from '../types/api';
 
 export const featureService = {
+  // Gets features filtered by user's organization (recommended)
   async getAll(): Promise<Feature[]> {
     const response = await apiClient.get('/features');
     return response.data;
   },
 
+  // Gets features for specific organization
   async getByOrganization(organizationId: string): Promise<Feature[]> {
     const response = await apiClient.get(`/features/organization/${organizationId}`);
     return response.data;
@@ -186,11 +188,13 @@ import { apiClient } from './api';
 import { Plan, CreatePlanRequest, UpdatePlanRequest } from '../types/api';
 
 export const planService = {
+  // Gets plans filtered by user's organization (recommended)
   async getAll(): Promise<Plan[]> {
     const response = await apiClient.get('/plans');
     return response.data;
   },
 
+  // Gets plans for specific organization
   async getByOrganization(organizationId: string): Promise<Plan[]> {
     const response = await apiClient.get(`/plans/organization/${organizationId}`);
     return response.data;
@@ -208,6 +212,47 @@ export const planService = {
 
   async delete(id: string): Promise<void> {
     await apiClient.delete(`/plans/${id}`);
+  }
+};
+```
+
+---
+
+## 👥 Feature User Service
+
+```typescript
+// src/services/featureUser.ts
+import { apiClient } from './api';
+import { FeatureUser, CreateFeatureUserRequest, ValidateTokenRequest, TokenValidationResponse } from '../types/api';
+
+export const featureUserService = {
+  async create(data: CreateFeatureUserRequest): Promise<FeatureUser> {
+    const response = await apiClient.post('/feature-users', data);
+    return response.data;
+  },
+
+  async getById(id: string): Promise<FeatureUser> {
+    const response = await apiClient.get(`/feature-users/${id}`);
+    return response.data;
+  },
+
+  async getByFeature(featureId: string): Promise<FeatureUser[]> {
+    const response = await apiClient.get(`/feature-users/feature/${featureId}`);
+    return response.data;
+  },
+
+  async getByOrganization(organizationId: string): Promise<FeatureUser[]> {
+    const response = await apiClient.get(`/feature-users/organization/${organizationId}`);
+    return response.data;
+  },
+
+  async validateToken(data: ValidateTokenRequest): Promise<TokenValidationResponse> {
+    const response = await apiClient.post('/feature-users/validate', data);
+    return response.data;
+  },
+
+  async deactivate(id: string): Promise<void> {
+    await apiClient.patch(`/feature-users/${id}/deactivate`);
   }
 };
 ```
@@ -318,9 +363,14 @@ export const analyticsService = {
     return response.data;
   },
 
-  async getDashboardStats(organizationId: string): Promise<DashboardStats> {
+  async getDashboardStats(organizationId: string): Promise<any> {
     const response = await apiClient.get(`/analytics/dashboard/${organizationId}`);
     return response.data;
+  },
+
+  async getComprehensiveDashboard(organizationId: string): Promise<DashboardResponse> {
+    const response = await apiClient.get(`/dashboard/organization/${organizationId}`);
+    return response;
   }
 };
 ```
@@ -484,6 +534,20 @@ try {
 
 ---
 
+## ⚠️ Important Notes
+
+### Organization Context
+- **GET /api/features** and **GET /api/plans** automatically filter by user's organization
+- Use **GET /api/features/organization/:id** only when you need specific organization data
+- Superadmin users see all data, regular admins see only their organization's data
+
+### Authentication Context
+- All protected routes require JWT token in Authorization header
+- Token contains user's organization context for automatic filtering
+- Use organization-specific endpoints when you need cross-organization data (superadmin only)
+
+---
+
 ## 🚀 Quick Start Checklist
 
 - [ ] Copy `frontend-types.ts` to your project
@@ -495,5 +559,6 @@ try {
 - [ ] Set up React Query (optional)
 - [ ] Create reusable hooks
 - [ ] Build components with proper typing
+- [ ] Test organization context filtering
 
 **Your backend API is now ready for frontend integration!**

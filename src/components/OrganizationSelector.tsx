@@ -1,9 +1,12 @@
 import { useOrganization } from '../hooks/useOrganization';
+import { useAuth } from '../hooks/useAuth';
 
 export default function OrganizationSelector() {
   const { currentOrg, setCurrentOrg, organizations } = useOrganization();
+  const { owner } = useAuth();
 
-  if (organizations.length <= 1) return null;
+  // Only show selector if owner has multiple organizations
+  if (!owner || organizations.length <= 1) return null;
 
   return (
     <div className="mb-4">

@@ -1,5 +1,5 @@
 import { apiClient } from './api';
-import { DashboardStats, Analytics } from '../types/api';
+import { DashboardStats, DashboardResponse } from '../types/api';
 
 // Cache for analytics data (5 minutes)
 const CACHE_DURATION = 5 * 60 * 1000;
@@ -19,34 +19,16 @@ const setCachedData = <T>(key: string, data: T): void => {
 };
 
 export const analyticsService = {
-  async getDashboardStats(organizationId: string): Promise<DashboardStats> {
-    const cacheKey = `dashboard-stats-${organizationId}`;
-    const cached = getCachedData<DashboardStats>(cacheKey);
+  async getComprehensiveDashboard(organizationId: string): Promise<DashboardResponse> {
+    const cacheKey = `comprehensive-dashboard-${organizationId}`;
+    const cached = getCachedData<DashboardResponse>(cacheKey);
     
     if (cached) {
       return cached;
     }
 
-    const response = await apiClient.get<DashboardStats>(`/analytics/dashboard/${organizationId}`);
+    const response = await apiClient.get<DashboardResponse>(`/dashboard/organization/${organizationId}`);
     const data = response.data!;
-    setCachedData(cacheKey, data);
-    return data;
-  },
-
-  async getOrganizationAnalytics(organizationId: string, startDate?: string, endDate?: string): Promise<Analytics[]> {
-    const cacheKey = `org-analytics-${organizationId}-${startDate || 'all'}-${endDate || 'all'}`;
-    const cached = getCachedData<Analytics[]>(cacheKey);
-    
-    if (cached) {
-      return cached;
-    }
-
-    const params = new URLSearchParams();
-    if (startDate) params.append('startDate', startDate);
-    if (endDate) params.append('endDate', endDate);
-    
-    const response = await apiClient.get<Analytics[]>(`/analytics/organization/${organizationId}?${params}`);
-    const data = response.data || [];
     setCachedData(cacheKey, data);
     return data;
   },
