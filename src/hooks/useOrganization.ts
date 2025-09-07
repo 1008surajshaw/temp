@@ -18,8 +18,10 @@ export const useOrganization = () => {
   }, [owner, organizations.length]);
 
   const loadOrganizations = async () => {
+    if (!owner?.id) return;
+    
     try {
-      const orgs = await organizationService.getAll();
+      const orgs = await organizationService.getByOwner(owner.id);
       setOrganizations(orgs);
       
       // If no current org or current org not in list, set first one
@@ -45,9 +47,14 @@ export const useOrganization = () => {
     localStorage.setItem('currentOrganization', JSON.stringify(org));
   };
 
+  const selectOrganization = (org: Organization) => {
+    updateCurrentOrg(org);
+  };
+
   return {
     currentOrg,
     setCurrentOrg: updateCurrentOrg,
+    selectOrganization,
     organizations,
     loadOrganizations,
     refreshOrganizations

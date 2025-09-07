@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { featureService } from '../services/feature';
+import { featureUserService } from '../services/featureUser';
 import { useOrganization } from '../hooks/useOrganization';
 import { FeatureUser } from '../types/api';
 
@@ -18,16 +19,8 @@ export default function UsersPage() {
     if (!currentOrg) return;
     
     try {
-      // Get all features for the organization and their users
-      const features = await featureService.getByOrganization(currentOrg.id);
-      const allUsers: FeatureUser[] = [];
-      
-      for (const feature of features) {
-        const featureUsers = await featureService.getFeatureUsers(feature.id);
-        allUsers.push(...featureUsers);
-      }
-      
-      setUsers(allUsers);
+      const users = await featureUserService.getByOrganization(currentOrg.id);
+      setUsers(users);
     } catch (error) {
       console.error('Failed to load users:', error);
     } finally {

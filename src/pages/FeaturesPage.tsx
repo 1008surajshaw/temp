@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { featureService } from '../services/feature';
+import { featureUserService } from '../services/featureUser';
 import { organizationService } from '../services/organization';
 import { useOrganization } from '../hooks/useOrganization';
 import { Feature, Organization, CreateFeatureRequest, FeatureUser, CreateFeatureUserRequest } from '../types/api';
@@ -79,7 +80,7 @@ export default function FeaturesPage() {
   const handleViewUsers = async (feature: Feature) => {
     setSelectedFeature(feature);
     try {
-      const users = await featureService.getFeatureUsers(feature.id);
+      const users = await featureUserService.getByFeature(feature.id);
       setFeatureUsers(users);
       setShowUsersModal(true);
     } catch (error) {
@@ -92,7 +93,7 @@ export default function FeaturesPage() {
     if (!selectedFeature) return;
     
     try {
-      await featureService.createFeatureUser({
+      await featureUserService.create({
         ...newUser,
         featureId: selectedFeature.id,
         organizationId: selectedFeature.organizationId
@@ -108,7 +109,7 @@ export default function FeaturesPage() {
   const handleDeleteUser = async (userId: string) => {
     if (confirm('Are you sure you want to delete this user?')) {
       try {
-        await featureService.deleteFeatureUser(userId);
+        await featureUserService.delete(userId);
         if (selectedFeature) {
           handleViewUsers(selectedFeature);
         }

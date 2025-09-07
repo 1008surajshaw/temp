@@ -1,41 +1,47 @@
 import { useState, useEffect } from 'react';
 import { organizationService } from '../services/organization';
+import { useOrganization } from '../hooks/useOrganization';
+import { useAuth } from '../hooks/useAuth';
 import { Organization, CreateOrganizationRequest } from '../types/api';
 import Modal from '../components/Modal';
 
 export default function OrganizationsPage() {
-  const [organizations, setOrganizations] = useState<Organization[]>([]);
+  const { owner } = useAuth();
+  const { organizations, refreshOrganizations, setCurrentOrg } = useOrganization();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const [newOrganization, setNewOrganization] = useState<CreateOrganizationRequest>({
     name: '',
     description: '',
-    ownerId: 'current-owner-id' // This should come from auth context
+    ownerId: owner?.id || ''
   });
 
   useEffect(() => {
-    loadOrganizations();
-  }, []);
-
-  const loadOrganizations = async () => {
-    try {
-      const data = await organizationService.getAll();
-      setOrganizations(data);
-    } catch (error) {
-      console.error('Failed to load organizations:', error);
-    } finally {
+    if (owner?.organizationCreated) {
       setLoading(false);
     }
-  };
+  }, [owner]);
+
+  useEffect(() => {
+    if (owner?.id) {
+      setNewOrganization(prev => ({ ...prev, ownerId: owner.id }));
+    }
+  }, [owner]);
+
+
 
   const handleCreateOrganization = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!owner?.id) return;
+    
     try {
-      await organizationService.create(newOrganization);
-      setNewOrganization({ name: '', description: '', ownerId: 'current-owner-id' });
+      const newOrg = await organizationService.create(newOrganization);
+      setNewOrganization({ name: '', description: '', ownerId: owner.id });
       setShowCreateModal(false);
-      loadOrganizations();
+      await refreshOrganizations();
+      // Set the newly created organization as current
+      setCurrentOrg(newOrg);
     } catch (error) {
       console.error('Failed to create organization:', error);
     }
@@ -45,11 +51,15 @@ export default function OrganizationsPage() {
     if (confirm('Are you sure you want to delete this organization?')) {
       try {
         await organizationService.delete(id);
-        loadOrganizations();
+        await refreshOrganizations();
       } catch (error) {
         console.error('Failed to delete organization:', error);
       }
     }
+  };
+
+  const handleSelectOrganization = (org: Organization) => {
+    setCurrentOrg(org);
   };
 
   if (loading) {
@@ -70,10 +80,10 @@ export default function OrganizationsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {organizations.map((org) => (
-          <div key={org.id} className="bg-white p-6 rounded-lg shadow">
+          <div key={org.id} className="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow">
             <h3 className="text-lg font-semibold mb-2">{org.name}</h3>
             <p className="text-gray-600 mb-4">{org.description}</p>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center mb-3">
               <span className={`px-2 py-1 rounded text-sm ${
                 org.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
               }`}>
@@ -86,6 +96,12 @@ export default function OrganizationsPage() {
                 Delete
               </button>
             </div>
+            <button
+              onClick={() => handleSelectOrganization(org)}
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 text-sm"
+            >
+              Select Organization
+            </button>
           </div>
         ))}
       </div>

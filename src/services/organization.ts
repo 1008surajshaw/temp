@@ -2,8 +2,13 @@ import { apiClient } from './api';
 import { Organization, CreateOrganizationRequest, UpdateOrganizationRequest } from '../types/api';
 
 export const organizationService = {
+  async getByOwner(ownerId: string): Promise<Organization[]> {
+    const response = await apiClient.get<Organization[]>(`/organizations/owner/${ownerId}`);
+    return response.data || [];
+  },
+
   async getAll(): Promise<Organization[]> {
-    const response = await apiClient.get<Organization[]>('/organizations/my');
+    const response = await apiClient.get<Organization[]>('/organizations');
     return response.data || [];
   },
 
