@@ -10,6 +10,8 @@ export default function PlansPage() {
   const [plans, setPlans] = useState<Plan[]>([]);
   const [features, setFeatures] = useState<Feature[]>([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [loading, setLoading] = useState(true);
 
   const [newPlan, setNewPlan] = useState<CreatePlanRequest>({
@@ -85,6 +87,77 @@ export default function PlansPage() {
     }
   };
 
+  const handleViewDetails = async (planId: string) => {
+    try {
+      const planDetails = await planService.getById(planId);
+      setSelectedPlan(planDetails);
+      setShowDetailsModal(true);
+    } catch (error) {
+      console.error('Failed to load plan details:', error);
+    }
+  };
+
+  const updatePlanFeature = async (featureId: string, newLimit: number, isUnlimited: boolean) => {
+    if (!selectedPlan) return;
+    
+    try {
+      const updatedFeatures = selectedPlan.features.map(f => 
+        f.featureId === featureId ? { ...f, limit: newLimit, isUnlimited } : f
+      );
+      
+      const updatedPlan = await planService.update(selectedPlan.id, { features: updatedFeatures });
+      setSelectedPlan(updatedPlan);
+      loadData();
+    } catch (error) {
+      console.error('Failed to update feature:', error);
+    }
+  };
+
+  const addFeatureToPlan = async (featureId: string) => {
+    if (!selectedPlan) return;
+    
+    try {
+      const newFeature: FeatureLimit = { featureId, limit: 100, isUnlimited: false };
+      const updatedFeatures = [...selectedPlan.features, newFeature];
+      
+      const updatedPlan = await planService.update(selectedPlan.id, { features: updatedFeatures });
+      setSelectedPlan(updatedPlan);
+      loadData();
+    } catch (error) {
+      console.error('Failed to add feature:', error);
+    }
+  };
+
+  const removeFeatureFromPlan = async (featureId: string) => {
+    if (!selectedPlan) return;
+    
+    try {
+      const updatedFeatures = selectedPlan.features.filter(f => f.featureId !== featureId);
+      const updatedPlan = await planService.update(selectedPlan.id, { features: updatedFeatures });
+      setSelectedPlan(updatedPlan);
+      loadData();
+    } catch (error) {
+      console.error('Failed to remove feature:', error);
+    }
+  };
+
+  const updatePlanPricing = async (price: number) => {
+    if (!selectedPlan) return;
+    
+    try {
+      const updatedPlan = await planService.update(selectedPlan.id, { price });
+      setSelectedPlan(updatedPlan);
+      loadData();
+    } catch (error) {
+      console.error('Failed to update pricing:', error);
+    }
+  };
+
+  const getFeatureName = (featureId: string) => {
+    const feature = features.find(f => f.id === featureId);
+    return feature ? feature.name : 'Unknown Feature';
+  };
+
   if (!currentOrg) {
     return <div className="text-center py-8">Please select an organization first.</div>;
   }
@@ -114,11 +187,19 @@ export default function PlansPage() {
             <div className="text-sm text-gray-500 mb-4">
               {plan.features.length} features included
             </div>
-            <span className={`px-2 py-1 rounded text-sm ${
-              plan.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-            }`}>
-              {plan.isActive ? 'Active' : 'Inactive'}
-            </span>
+            <div className="flex justify-between items-center">
+              <span className={`px-2 py-1 rounded text-sm ${
+                plan.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+              }`}>
+                {plan.isActive ? 'Active' : 'Inactive'}
+              </span>
+              <button
+                onClick={() => handleViewDetails(plan.id)}
+                className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+              >
+                Manage Details
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -243,6 +324,114 @@ export default function PlansPage() {
             </button>
           </div>
         </form>
+      </Modal>
+
+      {/* Plan Details Modal */}
+      <Modal
+        isOpen={showDetailsModal}
+        onClose={() => setShowDetailsModal(false)}
+        title={`Manage Plan - ${selectedPlan?.name}`}
+      >
+        {selectedPlan && (
+          <div className="space-y-6">
+            {/* Pricing Section */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Pricing</h3>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm">Price: $</span>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={selectedPlan.price}
+                  onChange={(e) => updatePlanPricing(parseFloat(e.target.value))}
+                  className="w-24 px-2 py-1 border border-gray-300 rounded text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Features Section */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Features & Limits</h3>
+              {selectedPlan.features.length === 0 ? (
+                <p className="text-gray-500">No features added yet.</p>
+              ) : (
+                <div className="space-y-3">
+                  {selectedPlan.features.map((feature, index) => (
+                    <div key={index} className="border rounded p-3 bg-gray-50">
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="font-medium">{getFeatureName(feature.featureId)}</h4>
+                        <button
+                          onClick={() => removeFeatureFromPlan(feature.featureId)}
+                          className="text-red-600 hover:text-red-800 text-sm"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                      
+                      <div className="flex items-center space-x-3">
+                        <label className="flex items-center">
+                          <input
+                            type="checkbox"
+                            checked={feature.isUnlimited}
+                            onChange={(e) => updatePlanFeature(
+                              feature.featureId,
+                              feature.limit,
+                              e.target.checked
+                            )}
+                            className="mr-1"
+                          />
+                          <span className="text-sm">Unlimited</span>
+                        </label>
+                        
+                        {!feature.isUnlimited && (
+                          <div className="flex items-center space-x-1">
+                            <span className="text-sm">Limit:</span>
+                            <input
+                              type="number"
+                              min="1"
+                              value={feature.limit}
+                              onChange={(e) => updatePlanFeature(
+                                feature.featureId,
+                                parseInt(e.target.value),
+                                feature.isUnlimited
+                              )}
+                              className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Add Feature Section */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Add Feature</h3>
+              <select
+                onChange={(e) => {
+                  if (e.target.value) {
+                    addFeatureToPlan(e.target.value);
+                    e.target.value = '';
+                  }
+                }}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Select feature to add...</option>
+                {features
+                  .filter(f => !selectedPlan.features.some(pf => pf.featureId === f.id))
+                  .map(feature => (
+                    <option key={feature.id} value={feature.id}>
+                      {feature.name}
+                    </option>
+                  ))
+                }
+              </select>
+            </div>
+          </div>
+        )}
       </Modal>
     </div>
   );

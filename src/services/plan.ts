@@ -7,6 +7,11 @@ export const planService = {
     return response.data || [];
   },
 
+  async getById(id: string): Promise<Plan> {
+    const response = await apiClient.get<Plan>(`/plans/${id}`);
+    return response.data!;
+  },
+
   async create(data: CreatePlanRequest): Promise<Plan> {
     const response = await apiClient.post<Plan>('/plans', data);
     return response.data!;

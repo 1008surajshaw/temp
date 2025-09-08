@@ -67,8 +67,8 @@ export default function UsersPage() {
 
   const handleToggleUserActivity = async (userId: string) => {
     try {
-      await featureUserService.toggleActivity(userId);
-      loadUsers();
+      const updatedUser = await featureUserService.toggleActivity(userId);
+      setUsers(users.map(user => user.id === userId ? updatedUser : user));
     } catch (error) {
       console.error('Failed to toggle user activity:', error);
     }
