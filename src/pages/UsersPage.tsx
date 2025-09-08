@@ -65,14 +65,12 @@ export default function UsersPage() {
     }
   };
 
-  const handleDeactivateUser = async (userId: string) => {
-    if (confirm('Are you sure you want to deactivate this user?')) {
-      try {
-        await featureUserService.deactivate(userId);
-        loadUsers();
-      } catch (error) {
-        console.error('Failed to deactivate user:', error);
-      }
+  const handleToggleUserActivity = async (userId: string) => {
+    try {
+      await featureUserService.toggleActivity(userId);
+      loadUsers();
+    } catch (error) {
+      console.error('Failed to toggle user activity:', error);
     }
   };
 
@@ -194,14 +192,16 @@ export default function UsersPage() {
                 >
                   View Details
                 </button>
-                {user.isActive && (
-                  <button
-                    onClick={() => handleDeactivateUser(user.id)}
-                    className="bg-red-600 text-white py-2 px-3 rounded text-sm hover:bg-red-700"
-                  >
-                    Deactivate
-                  </button>
-                )}
+                <button
+                  onClick={() => handleToggleUserActivity(user.id)}
+                  className={`py-2 px-3 rounded text-sm ${
+                    user.isActive 
+                      ? 'bg-red-600 text-white hover:bg-red-700' 
+                      : 'bg-green-600 text-white hover:bg-green-700'
+                  }`}
+                >
+                  {user.isActive ? 'Deactivate' : 'Activate'}
+                </button>
               </div>
             </div>
           ))}

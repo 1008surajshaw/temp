@@ -27,8 +27,8 @@ export const featureUserService = {
     return response.data!;
   },
 
-  async deactivate(id: string): Promise<void> {
-    await apiClient.patch(`/feature-users/${id}/deactivate`);
+  async toggleActivity(id: string): Promise<void> {
+    await apiClient.patch(`/feature-users/${id}/toggle`);
   },
 
   async delete(id: string): Promise<void> {
