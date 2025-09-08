@@ -65,6 +65,13 @@ class ApiClient {
       method: 'DELETE',
     });
   }
+
+  patch<T>(endpoint: string, data?: any): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, {
+      method: 'PATCH',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL);

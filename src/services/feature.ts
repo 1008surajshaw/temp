@@ -27,17 +27,5 @@ export const featureService = {
   },
 
   // Feature Users
-  async getFeatureUsers(featureId: string): Promise<FeatureUser[]> {
-    const response = await apiClient.get<FeatureUser[]>(`/features/${featureId}/users`);
-    return response.data || [];
-  },
 
-  async createFeatureUser(data: CreateFeatureUserRequest): Promise<FeatureUser> {
-    const response = await apiClient.post<FeatureUser>('/feature-users', data);
-    return response.data!;
-  },
-
-  async deleteFeatureUser(userId: string): Promise<void> {
-    await apiClient.delete(`/feature-users/${userId}`);
-  }
 };
