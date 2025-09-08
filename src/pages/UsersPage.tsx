@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { featureUserService } from '../services/featureUser';
 import { userPlanService } from '../services/userPlan';
 import { planService } from '../services/plan';
@@ -188,16 +189,22 @@ export default function UsersPage() {
               <div className="flex space-x-2">
                 <button
                   onClick={() => handleViewDetails(user)}
-                  className="flex-1 bg-blue-600 text-white py-2 px-3 rounded text-sm hover:bg-blue-700"
+                  className="bg-blue-600 text-white py-2 px-2 rounded text-sm hover:bg-blue-700"
                 >
-                  View Details
+                  Plans
                 </button>
+                <Link
+                  to={`/dashboard/user/${user.id}`}
+                  className="bg-green-600 text-white py-2 px-2 rounded text-sm hover:bg-green-700 text-center"
+                >
+                  Details
+                </Link>
                 <button
                   onClick={() => handleToggleUserActivity(user.id)}
-                  className={`py-2 px-3 rounded text-sm ${
+                  className={`py-2 px-2 rounded text-sm ${
                     user.isActive 
                       ? 'bg-red-600 text-white hover:bg-red-700' 
-                      : 'bg-green-600 text-white hover:bg-green-700'
+                      : 'bg-yellow-600 text-white hover:bg-yellow-700'
                   }`}
                 >
                   {user.isActive ? 'Deactivate' : 'Activate'}

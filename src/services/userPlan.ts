@@ -43,5 +43,10 @@ export const userPlanService = {
   async getHistory(userId: string): Promise<UserPlan[]> {
     const response = await apiClient.get<UserPlan[]>(`/user-plans/history/${userId}`);
     return response.data || [];
+  },
+
+  async getUserDetails(accessToken: string): Promise<any> {
+    const response = await apiClient.post('/user/details', { accessToken });
+    return response.data!;
   }
 };

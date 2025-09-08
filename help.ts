@@ -1,10 +1,3 @@
-// ============================================
-// FRONTEND INTEGRATION HELP - COMPLETE PLAN MANAGEMENT
-// ============================================
-
-// ============================================
-// 💳 PLAN MANAGEMENT PAGE GUIDE
-// ============================================
 
 export const PlanPageGuide = {
   pageStructure: {
@@ -734,11 +727,98 @@ export const DataFlowSummary = {
   ]
 };
 
+// ============================================
+// 👤 USER DETAILS PAGE GUIDE
+// ============================================
+
+export const UserDetailsPageGuide = {
+  pageStructure: {
+    layout: "User dashboard with comprehensive details",
+    sections: [
+      "User Profile Card",
+      "Current Plan Details", 
+      "Feature Usage Overview",
+      "Usage Analytics & Charts",
+      "Plan History Timeline",
+      "Success Rate Metrics"
+    ]
+  },
+  
+  requiredAPIs: [
+    "POST /api/user/details - Get complete user details",
+    "GET /api/user-plans/history/:userId - Get plan history",
+    "GET /api/analytics/feature/:featureId - Get feature analytics"
+  ]
+};
+
+// ============================================
+// 📊 USER DETAILS API ENDPOINTS
+// ============================================
+
+export const UserDetailsAPIs = {
+  // Get Complete User Details
+  getUserDetails: {
+    endpoint: "POST /api/user/details",
+    auth: "None (Public - uses plan token)",
+    request: {
+      body: {
+        accessToken: "string (user plan token)"
+      }
+    },
+    response: {
+      success: true,
+      data: {
+        user: {
+          id: "string",
+          name: "string",
+          email: "string",
+          isActive: "boolean"
+        },
+        plan: {
+          id: "string",
+          name: "string",
+          description: "string",
+          price: "number",
+          billingCycle: "monthly | annually"
+        },
+        subscription: {
+          id: "string",
+          purchaseDate: "Date",
+          expiryDate: "Date",
+          isActive: "boolean",
+          daysRemaining: "number"
+        },
+        features: [
+          {
+            featureId: "string",
+            featureName: "string",
+            featureDescription: "string",
+            limit: "number | 'unlimited'",
+            currentUsage: "number",
+            remaining: "number | 'unlimited'",
+            isUnlimited: "boolean",
+            usagePercentage: "number",
+            lastUsed: "Date | null"
+          }
+        ],
+        organization: {
+          id: "string",
+          name: "string"
+        }
+      },
+      newToken: "string (if token was refreshed)",
+      message: "string (if token refreshed)"
+    }
+  }
+};
+
 export default {
   PlanPageGuide,
   PlanAPIs,
   ReactPlanComponent,
   PlanManagementCSS,
   MobilePlanComponent,
-  DataFlowSummary
+  DataFlowSummary,
+  UserDetailsPageGuide,
+  UserDetailsAPIs
 };

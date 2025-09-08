@@ -3,6 +3,7 @@ import Layout from '../components/Layout';
 import FeaturesPage from './FeaturesPage';
 import OrganizationsPage from './OrganizationsPage';
 import UsersPage from './UsersPage';
+import UserDetailsPage from './UserDetailsPage';
 import PlansPage from './PlansPage';
 import SubscriptionsPage from './SubscriptionsPage';
 import AnalyticsPage from './AnalyticsPage';
@@ -72,6 +73,7 @@ export default function Dashboard() {
       <Routes>
         <Route path="/" element={<DashboardHome />} />
         <Route path="/users" element={<UsersPage />} />
+        <Route path="/user/:userId" element={<UserDetailsPage />} />
         <Route path="/features" element={<FeaturesPage />} />
         <Route path="/plans" element={<PlansPage />} />
         <Route path="/subscriptions" element={<SubscriptionsPage />} />
